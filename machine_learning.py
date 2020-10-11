@@ -11,6 +11,8 @@ def binarize_label(trig):
     label[np.where(trig==2)[0]] = 2
     return label
 
+import matplotlib.pyplot as plt
+
 def run_LDA_cv (X, trig):
     label = binarize_label(trig)
     clf = LinearDiscriminantAnalysis()

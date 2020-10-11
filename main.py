@@ -16,21 +16,21 @@ def main():
 
     filenames = listdir("data")
 
-    filename = filenames[4]
-    dataP1h2 = load_dataset(filename)
+    filename = filenames[1]
+    data = load_dataset(filename)
     
     # start with data from a single dataset
-    trig = pd.DataFrame(dataP1h2['trig'])
-    X = pd.DataFrame(dataP1h2['y'])
+    trig = pd.DataFrame(data['trig'])
+    X = pd.DataFrame(data['y'])
     
     # call or not call
-    #analyse_data(trig, y) 
-    plot_data(trig, X, 0)
-    plot_data(trig, X, 1)
-    plot_data(trig, X, 2)
-    plot_data(trig, X, -1)
+    analyse_data(trig, X)
+    plot_data(trig, X, filename)
+    #plot_data(trig, X, 0)
+    #plot_data(trig, X, 1)
+    #plot_data(trig, X, 2)
+    #plot_data(trig, X, -1)
 
-    analyse_data(trig, X) # call or not call
     plot_data(trig, X, filename) # call or not call
 
     scores_LDA = run_LDA_cv(X,trig)
