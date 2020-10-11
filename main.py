@@ -23,19 +23,17 @@ def main():
     trig = pd.DataFrame(dataP1h2['trig'])
     X = pd.DataFrame(dataP1h2['y'])
     
-<<<<<<< Updated upstream
     # call or not call
     #analyse_data(trig, y) 
-    plot_data(trig, y, 0)
-    plot_data(trig, y, 1)
-    plot_data(trig, y, 2)
-    plot_data(trig, y, -1)
-=======
+    plot_data(trig, X, 0)
+    plot_data(trig, X, 1)
+    plot_data(trig, X, 2)
+    plot_data(trig, X, -1)
+
     analyse_data(trig, X) # call or not call
     plot_data(trig, X, filename) # call or not call
 
     scores_LDA = run_LDA_cv(X,trig)
 
->>>>>>> Stashed changes
 
 main()
