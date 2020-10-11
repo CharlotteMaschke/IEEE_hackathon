@@ -17,8 +17,12 @@ def main():
     trig = pd.DataFrame(dataP1h2['trig'])
     y = pd.DataFrame(dataP1h2['y'])
     
-    analyse_data(trig, y) # call or not call
-    plot_data(trig, y) # call or not call
+    # call or not call
+    #analyse_data(trig, y) 
+    plot_data(trig, y, 0)
+    plot_data(trig, y, 1)
+    plot_data(trig, y, 2)
+    plot_data(trig, y, -1)
 
     
     

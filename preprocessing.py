@@ -11,7 +11,6 @@ import numpy as np
 preprocessing = __import__("preprocessing")
 
 def analyse_data(trig, y):
-    ''' can be moved to other file '''
     # get head
     print('******* TRIG HEAD *******')
     print(trig.head())
@@ -30,13 +29,15 @@ def analyse_data(trig, y):
     print('******* Y DESCRIBE *******')
     print(y.describe())
     
-    print('******* TRIG VALUES (0, 1, 2, -1 *******')
+    # values available in "trig"
+    print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
 
-def plot_data(trig,y):
+def plot_data(trig,y,trig_value=2):
     plt.plot(y)
-    plt.vlines(np.where(trig == 2)[0], -600, 600, colors='lightgrey')
-    plt.title('dataP1h2 with target +2 in grey')
+    plt.vlines(np.where(trig == trig_value)[0], -600, 600, colors='lightgrey')
+    plt_title = 'dataP1h2 with target ' + str(trig_value) +  ' in grey'
+    plt.title(plt_title)
     plt.xlabel('time')
     plt.ylabel('electrical activity')
     plt.show()
