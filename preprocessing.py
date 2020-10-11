@@ -5,6 +5,9 @@ Created on Sun Oct 11 21:43:38 2020
 @author: Prinzessin
 """
 
+import matplotlib.pyplot as plt
+import numpy as np
+
 preprocessing = __import__("preprocessing")
 
 def analyse_data(trig, y):
@@ -29,3 +32,11 @@ def analyse_data(trig, y):
     
     print('******* TRIG VALUES (0, 1, 2, -1 *******')
     print(trig[0].value_counts())
+
+def plot_data(trig,y):
+    plt.plot(y)
+    plt.vlines(np.where(trig == 2)[0], -600, 600, colors='lightgrey')
+    plt.title('dataP1h2 with target +2 in grey')
+    plt.xlabel('time')
+    plt.ylabel('electrical activity')
+    plt.show()

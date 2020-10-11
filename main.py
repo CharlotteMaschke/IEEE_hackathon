@@ -18,7 +18,8 @@ def main():
     y = pd.DataFrame(dataP1h2['y'])
     
     analyse_data(trig, y) # call or not call
-    
+    plot_data(trig, y) # call or not call
+
     
     
 main()
