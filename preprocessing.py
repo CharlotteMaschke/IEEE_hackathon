@@ -34,7 +34,7 @@ def analyse_data(trig, y):
     print(trig[0].value_counts())
 
 def plot_data(trig,y,trig_value=2):
-    plt.plot(y)
+    plt.plot(y[0])
     plt.vlines(np.where(trig == trig_value)[0], -600, 600, colors='lightgrey')
     plt_title = 'dataP1h2 with target ' + str(trig_value) +  ' in grey'
     plt.title(plt_title)
