@@ -35,5 +35,10 @@ def main():
     #scores_LDA = run_LDA_cv(X_train,Y_train,X_test,Y_test)
     #scores_LDA = run_LDA(X_train,Y_train,X_test,Y_test)
     scores_SVM = run_SVM(X_train,Y_train,X_test,Y_test)
+    
+    
+    # scores_rfc = run_rfc(X_train,Y_train,X_test,Y_test)
+    
+    scores_nn = run_nn(X_train,Y_train,X_test,Y_test)
 
 main()
