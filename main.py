@@ -26,10 +26,10 @@ def main():
     # call or not call
     analyse_data(trig, X)
     plot_data(trig, X, filename)
-    #plot_data(trig, X, 0)
-    #plot_data(trig, X, 1)
-    #plot_data(trig, X, 2)
-    #plot_data(trig, X, -1)
+    #plot_data(trig, X, filename, 0)
+    #plot_data(trig, X, filename, 1)
+    #plot_data(trig, X, filename, 2)
+    #plot_data(trig, X, filename, -1)
 
     plot_data(trig, X, filename) # call or not call
 
