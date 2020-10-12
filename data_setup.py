@@ -8,14 +8,14 @@ import plotly.express as px
 files = ["P1_high2.mat", "P1_low1.mat", "P1_low2.mat","P2_high1.mat", "P2_high2.mat", "P2_low2.mat"]
 
 
-def process_allfiles() :
+def process_allfiles(melt=True) :
     df = pd.DataFrame()
     for i in files:
         P_df = set_up(i)
-        df = df.append(P_df)
+        df = df.append(P_df, melt)
     return df
 
-def set_up(filename):
+def set_up(filename, melt=True):
     data = load_data.load_dataset(filename)
     col_names = {0:"Fz", 1:"C3", 2:"Cz", 3:"C4", 4:"CP1", 5:"CPz", 6:"CP2", 7:"Pz"}
     df = pd.DataFrame.from_dict(data["y"])
@@ -28,7 +28,34 @@ def set_up(filename):
     df_full['filename'] = filename
     df_full['subject'] = filename[0:2]
     df_full['condition'] = filename[3:].replace(".mat","")
+    df_full['data_quality'] = df_full['condition'].apply(lambda x: 'high' if 'high' in x else 'low')
+
+    triggers = return_trig_dict(data['trig'])
+    df_full['seq_type'] = df_full['time'].apply(lambda x: get_sequence_info(triggers, x, 'seq_type'))
+    df_full['seq_index'] = df_full['time'].apply(lambda x: get_sequence_info(triggers, x, 'seq_index'))
+    df_full['seq_start'] = df_full['time'].apply(lambda x: get_sequence_info(triggers, x, 'seq_start'))
+    df_full['seq_time'] = df_full['time']-df_full['seq_start']
+
+    if melt == True:
+        df_full = pd.melt(df_full, id_vars=['time','trigger','filename','subject','condition', 'data_quality','seq_type', 'seq_index','seq_start', 'seq_time'], value_vars=['Fz','C3','Cz','C4','CP1','CPz','CP2','Pz'], var_name='electrode', value_name='amplitude')
     return df_full
+
+def get_sequence_info(triggers, time, info):
+    possible_keys = list(filter(lambda number: number <= time, triggers.keys()))
+    if (len(possible_keys)==0):
+        default = {'seq_type': 0, 'seq_index':0, 'seq_start':0}
+        return default[info]
+    return triggers[possible_keys[len(possible_keys)-1]][info]
+    
+# return dict of sequences where key is the "time" and values are seq_type, seq_index and seq_start
+def return_trig_dict(trig):
+    seq_dict = {}
+    seq_index = 1
+    for i in range(0, trig.shape[0]):
+        if trig[i] in [-1, 1, 2]:
+            seq_dict[i]={'seq_type': trig[i][0], 'seq_index': seq_index, 'seq_start':i}
+            seq_index = seq_index+1
+    return seq_dict
 
 #Join df
 #df_m = pd.melt(df, id_vars=['time','trigger','filename','subject','condition'], value_vars=['Fz','C3','Cz','C4','CP1','CPz','CP2','Pz'], var_name='electrode', value_name='amplitude')
