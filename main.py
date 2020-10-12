@@ -23,6 +23,8 @@ def main():
     trig = pd.DataFrame(data['trig'])
     X = pd.DataFrame(data['y'])
     
+    trig, X = clip_big_amp_values(trig, X)
+    
     # call or not call
     analyse_data(trig, X)
     plot_data(trig, X, filename)
