@@ -13,8 +13,10 @@ load_data = __import__("load_data")
 
 def load_dataset(filename):
     data = scipy.io.loadmat("data/"+filename)
+    trig = pd.DataFrame(data['trig'])
+    X = pd.DataFrame(data['y'])
 
-    return data
+    return trig, X
 
 
 

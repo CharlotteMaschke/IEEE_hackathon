@@ -14,26 +14,24 @@ import matplotlib.pyplot as plt
 
 def main():
 
-    filenames = listdir("data")
+    #filenames = listdir("data")
+    #filename = filenames[1]
+    trig_train, data_train = load_dataset('P2_high1.mat')
+    trig_test, data_test = load_dataset('P2_high2.mat')
 
-    filename = filenames[1]
-    data = load_dataset(filename)
-    
-    # start with data from a single dataset
-    trig = pd.DataFrame(data['trig'])
-    X = pd.DataFrame(data['y'])
-    
     # call or not call
-    analyse_data(trig, X)
-    plot_data(trig, X, filename)
-    #plot_data(trig, X, 0)
-    #plot_data(trig, X, 1)
-    #plot_data(trig, X, 2)
-    #plot_data(trig, X, -1)
+    #analyse_data(trig_train, X_train)
+    #plot_data(trig_train, X_train, 'train')
+    #plot_data(trig_test, X_test, 'test')
 
-    plot_data(trig, X, filename) # call or not call
+    X_train,Y_train = average_Nms(trig_train,data_train,-100,150)
+    X_test, Y_test = average_Nms(trig_test,data_test,-100,150)
 
-    scores_LDA = run_LDA_cv(X,trig)
+    #X_train = scale_data(X_train)
+    #X_test = scale_data(X_test)
 
+    #scores_LDA = run_LDA_cv(X_train,Y_train,X_test,Y_test)
+    #scores_LDA = run_LDA(X_train,Y_train,X_test,Y_test)
+    scores_SVM = run_SVM(X_train,Y_train,X_test,Y_test)
 
 main()

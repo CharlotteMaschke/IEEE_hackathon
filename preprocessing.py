@@ -8,9 +8,11 @@ Created on Sun Oct 11 21:43:38 2020
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
+import pandas as pd
+from sklearn.utils import shuffle
+from sklearn import preprocessing
 
-
-preprocessing = __import__("preprocessing")
+#preprocessing = __import__("preprocessing")
 
 def analyse_data(trig, X):
     ''' can be moved to other file '''
@@ -19,19 +21,19 @@ def analyse_data(trig, X):
     print(trig.head())
     print('******* Y HEAD *******')
     print(X.head())
-    
+
     # get info
     print('******* TRIG INFO *******')
     print(trig.info())
     print('******* Y INFO *******')
     print(X.info())
-    
+
     # describe
     print('******* TRIG DESCRIBE *******')
     print(trig.describe())
     print('******* Y DESCRIBE *******')
     print(X.describe())
-    
+
     # values available in "trig"
     print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
@@ -49,3 +51,33 @@ def plot_data(trig,X, filename):
     plt.xlabel('time')
     plt.ylabel('electrical activity')
     plt.show()
+
+def average_Nms(trig,data,start,duration):
+    tar = np.empty((duration-start,8,len(np.where(trig == 2)[0])))
+    non = np.empty((duration-start,8,len(np.where(trig == 1)[0])))
+    trig = np.array(trig)
+
+    n = 0
+    t = 0
+
+    for i in range(len(trig)-duration):
+        if trig[i][0] == 2:
+            tar[:,:,t] = data.iloc[i+start:i+duration,:]
+            t += 1
+        if trig[i][0] == 1:
+            non[:,:,n] = data.iloc[i+start:i+duration,:]
+            n += 1
+
+    target_values = np.mean(tar[:,:,:],axis=0)
+    nontar_values = np.mean(non[:,:,:],axis=0)
+
+    X = np.transpose(np.column_stack((target_values,nontar_values)))
+    Y = np.concatenate((np.ones(target_values.shape[1]),np.zeros(nontar_values.shape[1])))
+
+    X, Y = shuffle(X, Y, random_state=0)
+
+    return X,Y
+
+def scale_data(data):
+    data_scaled = preprocessing.scale(data)
+    return data
