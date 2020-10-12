@@ -80,11 +80,13 @@ def plot_functions(trig, X):
                     # break
     
     out1, out2 = average_Nms(trig,X,0,700)
+    print(out1)
+    print(out2)
     plt.vlines(100, -500, 500, colors='lightgrey')
-    y = pd.Series(np.arange(0, 800, 1))
+    y = pd.Series(np.arange(0, len(out1), 1))
     plt.plot(y, out1)
-    plt.legend(('Fz', 'C3', 'Cz', 'C4', 'CP1', 'CPz', 'CP2', 'Pz'),
-               loc='upper right')
+    plt.legend(('Fz', 'C3', 'Cz', 'C4', 'CP1', 'CPz', 'CP2', 'Pz'), bbox_to_anchor=(1.04,1),
+               loc='upper left')
     plt.show()
     
     
