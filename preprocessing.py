@@ -11,6 +11,8 @@ import numpy as np
 import pandas as pd
 from sklearn.utils import shuffle
 from sklearn import preprocessing
+import numpy as np
+from sklearn.model_selection import train_test_split
 
 #preprocessing = __import__("preprocessing")
 
@@ -88,4 +90,16 @@ def clip_big_amp_values(trig, X):
     new_x = new_x.reset_index(drop=True)
     
     return new_trig, new_x
-    
+
+
+def traintest_split(X_train,Y_train,X_test,Y_test):
+
+    X = np.row_stack((X_train,X_test))
+    Y = np.concatenate((Y_train,Y_test))
+
+    X_train, X_test, Y_train, Y_test = train_test_split(
+        X, Y, test_size = 0.2, random_state = 42)
+
+    return X_train, Y_train, X_test, Y_test
+
+

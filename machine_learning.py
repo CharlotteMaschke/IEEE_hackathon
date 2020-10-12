@@ -10,7 +10,7 @@ from sklearn import svm
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
-from sklearn.neighbors import NearestNeighbors
+
 
 def plot_confusion_matrix(Y_pred, Y_test):
     sns.heatmap(confusion_matrix(Y_pred, Y_test), annot=True, fmt="d")
@@ -40,6 +40,15 @@ def run_SVM (X_train, Y_train, X_test, Y_test):
     clf = svm.SVC(max_iter=1000000)
     clf.fit(X_train,Y_train)
     Y_pred = clf.predict(X_test)
+    score = accuracy_score(Y_pred, Y_test)
+    plot_confusion_matrix(Y_pred, Y_test)
+    print("SVM Accuracy: %0.2f" % (score*100) + '%')
+    return score
+
+def run_GNB(X_train, Y_train, X_test, Y_test):
+    from sklearn.naive_bayes import GaussianNB
+    gnb = GaussianNB()
+    Y_pred = gnb.fit(X_train, Y_train).predict(X_test)
     score = accuracy_score(Y_pred, Y_test)
     plot_confusion_matrix(Y_pred, Y_test)
     print("SVM Accuracy: %0.2f" % (score*100) + '%')
