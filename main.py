@@ -14,17 +14,20 @@ from machine_learning import *
 from os import listdir
 import matplotlib.pyplot as plt
 
+
 def main():
+    
+    offset = 0
 
     #filenames = listdir("data")
     #filename = filenames[1]
-    trig_train, data_train = load_dataset('P1_high1.mat')
-    trig_test, data_test = load_dataset('P1_high2.mat')
+    trig_train, data_train = load_dataset('P1_high1.mat', offset)
+    trig_test, data_test = load_dataset('P1_high2.mat', offset)
 
     # call or not call
-    #analyse_data(trig_train, X_train)
-    #plot_data(trig_train, X_train, 'train')
-    #plot_data(trig_test, X_test, 'test')
+    analyse_data(trig_train, data_train)
+    plot_data(trig_train, data_train, 'train', offset)
+    plot_data(trig_test, data_test, 'test', offset)
 
     X_train,Y_train = average_Nms(trig_train,data_train,-50,150)
     X_test, Y_test = average_Nms(trig_test,data_test,-50,150)
@@ -39,9 +42,9 @@ def main():
     scores_SVM = run_SVM(X_train,Y_train,X_test,Y_test)
     
     
-    # scores_rfc = run_rfc(X_train,Y_train,X_test,Y_test)
+    scores_rfc = run_rfc(X_train,Y_train,X_test,Y_test)
     scores_nn = run_nn(X_train,Y_train,X_test,Y_test)
 
-    #scores_GNB = run_GNB(X_train,Y_train,X_test,Y_test)
+    scores_GNB = run_GNB(X_train,Y_train,X_test,Y_test)
 
 main()

@@ -19,6 +19,7 @@ from sklearn.model_selection import train_test_split
 def analyse_data(trig, X):
     ''' can be moved to other file '''
     # get head
+    """
     print('******* TRIG HEAD *******')
     print(trig.head())
     print('******* Y HEAD *******')
@@ -35,15 +36,17 @@ def analyse_data(trig, X):
     print(trig.describe())
     print('******* Y DESCRIBE *******')
     print(X.describe())
-
+"""
     # values available in "trig"
     print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
     
-def plot_data(trig, X, filename, trig_value=2):
+def plot_data(trig, X, filename, offset, trig_value=2):
     plt.plot(X)
-    plt.vlines(np.where(trig == trig_value)[0], -150, 150, colors='lightgrey')
-    plt.title(filename[:-4] + ' with target ' + str(trig_value) +  ' in grey')
+    print(np.where(trig == trig_value)[0])
+    plt.vlines(np.where(trig == trig_value)[0] + offset, -150, 150, colors='lightgrey')
+    # plt.title(filename[:-4] + ' with target ' + str(trig_value) +  ' in grey')
+    plt.title(filename + ' with target ' + str(trig_value) +  ' in grey')
     plt.xlabel('time')
     plt.ylabel('electrical activity')
     plt.show()
@@ -77,7 +80,7 @@ def average_Nms(trig,data,start,duration):
 
 def scale_data(data):
     data_scaled = preprocessing.scale(data)
-    return data
+    return data_scaled
 
 
 def clip_big_amp_values(trig, X):
@@ -98,7 +101,7 @@ def traintest_split(X_train,Y_train,X_test,Y_test):
     Y = np.concatenate((Y_train,Y_test))
 
     X_train, X_test, Y_train, Y_test = train_test_split(
-        X, Y, test_size = 0.2, random_state = 42)
+        X, Y, test_size = 0.1, random_state = 42)
 
     return X_train, Y_train, X_test, Y_test
 
