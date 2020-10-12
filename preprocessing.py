@@ -38,7 +38,6 @@ def analyse_data(trig, X):
     print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
     
-
 def plot_data(trig, X, filename, trig_value=2):
     plt.plot(X)
     plt.vlines(np.where(trig == trig_value)[0], -150, 150, colors='lightgrey')
