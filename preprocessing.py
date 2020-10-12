@@ -37,20 +37,16 @@ def analyse_data(trig, X):
     # values available in "trig"
     print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
+    
 
-def plot_data(trig,y,trig_value=2):
-    plt.plot(y)
-    plt.vlines(np.where(trig == trig_value)[0], -600, 600, colors='lightgrey')
-    plt_title = 'dataP1h2 with target ' + str(trig_value) +  ' in grey'
-    plt.title(plt_title)
-
-def plot_data(trig,X, filename):
+def plot_data(trig, X, filename, trig_value=2):
     plt.plot(X)
-    plt.vlines(np.where(trig == 2)[0], -600, 600, colors='lightgrey')
-    plt.title(filename + 'with target +2 in grey')
+    plt.vlines(np.where(trig == trig_value)[0], -150, 150, colors='lightgrey')
+    plt.title(filename[:-4] + ' with target ' + str(trig_value) +  ' in grey')
     plt.xlabel('time')
     plt.ylabel('electrical activity')
     plt.show()
+
 
 def average_Nms(trig,data,start,duration):
     tar = np.empty((duration-start,8,len(np.where(trig == 2)[0])))
@@ -81,3 +77,16 @@ def average_Nms(trig,data,start,duration):
 def scale_data(data):
     data_scaled = preprocessing.scale(data)
     return data
+
+
+def clip_big_amp_values(trig, X):
+    series = (X >= -100) & (X <= 100)
+    
+    new_trig = trig[series.all(1)]
+    new_x = X[series.all(1)]
+    
+    new_trig = new_trig.reset_index(drop=True)
+    new_x = new_x.reset_index(drop=True)
+    
+    return new_trig, new_x
+    
