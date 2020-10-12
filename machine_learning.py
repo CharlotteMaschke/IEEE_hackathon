@@ -3,20 +3,17 @@ Created on Sun Oct 11 21:43:38 2020
 @author: Charlotte
 """
 import numpy as np
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import cross_val_score
-from sklearn.metrics import accuracy_score
+
 from sklearn import svm
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.metrics import confusion_matrix, classification_report
-
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 from sklearn.neural_network import MLPClassifier
-
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import NearestNeighbors
 
-from mlxtend.plotting import plot_decision_regions
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def plot_confusion_matrix(Y_pred, Y_test):
     sns.heatmap(confusion_matrix(Y_pred, Y_test), annot=True, fmt="d")
@@ -71,3 +68,13 @@ def run_nn(X_train, y_train, X_test, y_test):
     from sklearn.metrics import accuracy_score
     cm = accuracy_score(y_test, pred_mlpc)
     print(cm)    
+
+def run_GNB(X_train, Y_train, X_test, Y_test):
+    from sklearn.naive_bayes import GaussianNB
+    gnb = GaussianNB()
+    Y_pred = gnb.fit(X_train, Y_train).predict(X_test)
+    score = accuracy_score(Y_pred, Y_test)
+    plot_confusion_matrix(Y_pred, Y_test)
+    print("SVM Accuracy: %0.2f" % (score*100) + '%')
+    return score
+
