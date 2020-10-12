@@ -29,13 +29,18 @@ def main():
     plot_data(trig_train, data_train, 'train', offset)
     plot_data(trig_test, data_test, 'test', offset)
 
-    X_train,Y_train = average_Nms(trig_train,data_train,-50,150)
-    X_test, Y_test = average_Nms(trig_test,data_test,-50,150)
+    #X_train,Y_train = average_Nms(trig_train,data_train,-50,150)
+    #X_test, Y_test = average_Nms(trig_test,data_test,-50,150)
 
-    X_train, Y_train, X_test, Y_test = traintest_split(X_train, Y_train, X_test, Y_test)
+    #X_train, Y_train = clip_big_amp_values(X_train, Y_train)
+    #X_test, Y_test = clip_big_amp_values(X_test, Y_test)
+
+    #X_train, Y_train, X_test, Y_test = traintest_split(X_train, Y_train, X_test, Y_test)
 
     #X_train = scale_data(X_train)
-    #X_test = scale_data(X_test)
+    # X_test = scale_data(X_test)
+
+    print("train\n", X_train)
 
     #scores_LDA = run_LDA_cv(X_train,Y_train,X_test,Y_test)
     #scores_LDA = run_LDA(X_train,Y_train,X_test,Y_test)

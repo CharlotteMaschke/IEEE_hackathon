@@ -41,7 +41,7 @@ def analyse_data(trig, X):
     print('******* TRIG VALUES (0, 1, 2, -1) *******')
     print(trig[0].value_counts())
     
-def plot_data(trig, X, filename, offset, trig_value=2):
+def plot_data(trig, X, filename, offset = 0, trig_value=2):
     plt.plot(X)
     print(np.where(trig == trig_value)[0])
     plt.vlines(np.where(trig == trig_value)[0] + offset, -150, 150, colors='lightgrey')
@@ -101,7 +101,7 @@ def traintest_split(X_train,Y_train,X_test,Y_test):
     Y = np.concatenate((Y_train,Y_test))
 
     X_train, X_test, Y_train, Y_test = train_test_split(
-        X, Y, test_size = 0.1, random_state = 42)
+        X, Y, test_size = 0.2, random_state = 42)
 
     return X_train, Y_train, X_test, Y_test
 

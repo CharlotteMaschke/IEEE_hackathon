@@ -55,26 +55,30 @@ def run_rfc(X_train, y_train, X_test, y_test):
     pred_rfc = rfc.predict(X_test)
     pred_rfc[30:40]
     
-    print(classification_report(y_test, pred_rfc))
-    print(confusion_matrix(y_test, pred_rfc))
-    score = accuracy_score(y_test, pred_rfc)
+    # print(classification_report(y_test, pred_rfc))
+    # print(confusion_matrix(y_test, pred_rfc))
+    # score = accuracy_score(y_test, pred_rfc)
+    
+    score = accuracy_score(pred_rfc, y_test)
+    plot_confusion_matrix(pred_rfc, y_test)
     print("Random Forest Accuracy: %0.2f" % (score*100) + '%')
     
 def run_nn(X_train, y_train, X_test, y_test):
     mlpc = MLPClassifier(hidden_layer_sizes=(3,3,3), max_iter=100000)
     mlpc.fit(X_train, y_train)
     pred_mlpc = mlpc.predict(X_test)
-    print(classification_report(y_test, pred_mlpc))
-    print(confusion_matrix(y_test, pred_mlpc))
-    from sklearn.metrics import accuracy_score
-    cm = accuracy_score(y_test, pred_mlpc)
-    print(print("Neural network Accuracy: %0.2f" % (cm*100) + '%'))    
+    # print(classification_report(y_test, pred_mlpc))
+    # print(confusion_matrix(y_test, pred_mlpc))
+    # cm = accuracy_score(y_test, pred_mlpc)
+    score = accuracy_score(pred_mlpc, y_test)
+    plot_confusion_matrix(pred_mlpc, y_test)
+    print(print("Neural network Accuracy: %0.2f" % (score*100) + '%'))    
 
 def run_GNB(X_train, Y_train, X_test, Y_test):
     gnb = GaussianNB()
     Y_pred = gnb.fit(X_train, Y_train).predict(X_test)
     score = accuracy_score(Y_pred, Y_test)
     plot_confusion_matrix(Y_pred, Y_test)
-    print("SVM Accuracy: %0.2f" % (score*100) + '%')
+    print("GNB Accuracy: %0.2f" % (score*100) + '%')
     return score
 
